@@ -10,8 +10,6 @@
     <title>JS IO-Opdracht</title>
 </head>
 <body>
-    <script src="default.js""></script>
-
     <body class="bg-light">
         <div class="container">
           <main>
@@ -19,6 +17,7 @@
               <div class="col-md-5 col-lg-4 order-md-last">
                 <div id="wrongAlert" class="alert alert-danger" role="alert">
                   <p id="errorTitel">Yikes, errors..</p>
+                  <p id="error"></p>
                 </div>
                 <div id="successAlert" class="alert alert-success" role="alert">
                   <p id="successTitel">Goed gedaan!</p>
@@ -151,7 +150,7 @@
         
                   <hr class="my-4">
         
-                  <button class="w-100 btn btn-primary btn-lg" type="submit">Wave your magic wand</button>
+                  <button id="button" class="w-100 btn btn-primary btn-lg" type="submit">Wave your magic wand</button>
                 </form>
               </div>
             </div>
@@ -159,6 +158,7 @@
         </div>
       </body>
 
+      <script src="default.js""></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
     </script>
