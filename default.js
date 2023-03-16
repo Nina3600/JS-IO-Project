@@ -14,6 +14,7 @@ let adres = document.querySelector('#address')
 let land = document.querySelector('#land')
 let provincie = document.querySelector('#provincie')
 let postcode = document.querySelector('#postcode')
+let algemeneVoorwaarden = document.querySelector('#algemeneVoorwaarden')
 
 //Verbergen van alerts
 errorAlert.style.display = 'none'
@@ -24,6 +25,24 @@ betalingsAlert.style.display = 'none'
 let checkEmptyField = (veld, melding) => {
     if (veld.value == '') {
         errors.push(melding)
+    }
+}
+
+let validatePassword = () => {
+    if (wachtwoord.value === herhaalWachtwoord.value) 
+    {
+        if (wachtwoord.value >= 7 && herhaalWachtwoord.value >= 7) 
+        {
+            successAlert.style.display = 'block'
+        }
+        else
+        {
+            checkEmptyField(wachtwoord, 'Je wachtwoord moet langer dan 7 karakters zijn.')
+        }
+    }
+    else
+    {
+        checkEmptyField(wachtwoord, 'Je wachtwoorden komen niet overeen.')
     }
 }
 
@@ -38,14 +57,33 @@ let validateEmail = (emailadres) => {
     checkEmptyField(emailadres, 'E-mailaders is niet correct.')
 }
 
+let validateAlgemeneVoorwaarden = (veld) => {
+    if (veld.value != null) {
+        successAlert.style.display = 'block'
+    }
+    else {
+        checkEmptyField(algemeneVoorwaarden, 'Je moet de algemene voorwaarden accepteren.')
+    }
+}
+
 //Controleren of er een betalingswijze is aangeduid, zo niet een melding tonen
 let validatePayment = (veld) => {
-
+    
 }
 
 //Controleren of het veld 'Postcode' ingevuld is, zo niet een melding tonen
 let checkPC = (veld) => {
-    checkEmptyField(veld, 'Het veld postcode is vereist.')
+    if (veld.value != '') {
+        if (veld.value >= 1000 && veld.value <10000) {
+            successAlert.style.display = 'block'
+        }
+        else {
+            checkEmptyField(postcode, 'De waarde van postcode moet tussen 1000 en 9999 liggen.')
+        }
+    }
+    else {
+        checkEmptyField(postcode, 'Het veld postcode is vereist.')
+    }
 }
 
 //Loopen door de array 'errors' en telkens de melding tonen als er een fout is
@@ -65,9 +103,11 @@ let validateForm = () => {
     checkEmptyField(emailadres, 'Het veld email is vereist.')
     checkEmptyField(wachtwoord, 'Het veld wachtwoord is vereist.')
     checkEmptyField(herhaalWachtwoord, 'Het veld herhaal wachtwoord is vereist.')
+    validatePassword()
     checkEmptyField(adres, 'Adres is vereist.')
     checkEmptyField(provincie, 'Provincie is vereist.')
-    checkEmptyField(postcode, 'Het veld postcode is vereist.')
+    checkPC(postcode)
+    validateAlgemeneVoorwaarden(algemeneVoorwaarden)
 
     errorAlert.style.display = 'block'
     showErrors()

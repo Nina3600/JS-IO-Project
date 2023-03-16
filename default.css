@@ -1,8 +1,0 @@
-#errorTitel, #betalingsTitel, #successTitel {
-    font-weight: bold;
-    font-size: x-large;
-}
-
-#wrongAlert, #successAlert, #payAlert {
-    margin-top: 1.5rem;
-}
