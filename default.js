@@ -53,7 +53,7 @@ let showErrors = () => {
     for (let i = 0; i < errors.length; i++) {
         let error = errors[i]
         
-        document.querySelector('#error').textContent += error
+        document.querySelector('#error').innerHTML += error + '<br>'
     }
 }
 
