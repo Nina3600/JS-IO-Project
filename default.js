@@ -37,7 +37,7 @@ let validatePassword = () => {
 }
 
 let validatePasswordLength = () => {
-    if (wachtwoord.value < 7 && herhaalWachtwoord.value < 7) 
+    if (wachtwoord.value.length < 7 && herhaalWachtwoord.value.length < 7) 
     {
         errors.push('Je wachtwoord moet langer dan 7 karakters zijn.')
     }
@@ -61,8 +61,19 @@ let validateAlgemeneVoorwaarden = () => {
 }
 
 //Controleren of er een betalingswijze is aangeduid, zo niet een melding tonen
-let validatePayment = (veld) => {
-    
+let validatePayment = () => {
+    if (document.querySelector('#bankingapp').checked == true) {
+        betalingsWijze.innerHTML += 'Je betalingswijze is Banking app.'
+    }
+    else if (document.querySelector('#overschrijving').checked == true) {
+        betalingsWijze.innerHTML += 'Je betalingswijze is Overschrijving.'
+    } 
+    else if (document.querySelector('#visacard').checked == true) {
+        betalingsWijze.innerHTML += 'Je betalingswijze is Visa card.'
+    }
+    else if (document.querySelector('#paypal').checked == true){
+        betalingsWijze.innerHTML += 'Je betalingswijze is PayPal.'
+    }
 }
 
 //Controleren of het veld 'Postcode' ingevuld is, zo niet een melding tonen
@@ -76,7 +87,7 @@ let checkPC = (veld) => {
         }
     }
     else {
-        errors.push('Het veld postcode is vereist.')
+        errors.push('Postcode is vereist.')
     }
 }
 
@@ -103,6 +114,7 @@ let validateForm = () => {
     validatePassword()
     validatePasswordLength()
     checkEmptyField(adres, 'Adres is vereist.')
+    checkEmptyField(land, 'Land is vereist.')
     checkEmptyField(provincie, 'Provincie is vereist.')
     checkPC(postcode)
     validateAlgemeneVoorwaarden()
@@ -111,28 +123,13 @@ let validateForm = () => {
     showErrors()
 }
 
-let paymentWay = () => {
-    switch (betalingsWijze) {
-        case document.querySelector('#bankingapp').checked == true:
-            betalingsWijze.innerHTML += 'Je betalingswijze is Banking app.'
-            break;
-        case document.querySelector('#overschrijving').checked == true:
-            betalingsWijze.innerHTML += 'Je betalingswijze is Overschrijving.'
-            break;
-        case document.querySelector('#visacard').checked == true:
-            betalingsWijze.innerHTML += 'Je betalingswijze is Visa card.'
-            break;
-        case document.querySelector('#paypal').checked == true:
-            betalingsWijze.innerHTML += 'Je betalingswijze is PayPal.'
-            break;
-    } 
-}
-
 let noErrors = () => {
     if (errors == 0) {
         errorAlert.style.display = 'none'
         successAlert.style.display = 'block'
         betalingsAlert.style.display = 'block'
+
+        betalingsWijze += validatePayment()
     }
 }
 
