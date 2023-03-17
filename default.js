@@ -15,6 +15,7 @@ let land = document.querySelector('#land')
 let provincie = document.querySelector('#provincie')
 let postcode = document.querySelector('#postcode')
 let algemeneVoorwaarden = document.querySelector('#algemeneVoorwaarden')
+let betalingsWijze = document.querySelector('#betalingsWijze')
 
 //Verbergen van alerts
 errorAlert.style.display = 'none'
@@ -29,20 +30,16 @@ let checkEmptyField = (veld, melding) => {
 }
 
 let validatePassword = () => {
-    if (wachtwoord.value === herhaalWachtwoord.value) 
+    if (wachtwoord.value != herhaalWachtwoord.value) 
     {
-        if (wachtwoord.value >= 7 && herhaalWachtwoord.value >= 7) 
-        {
-            successAlert.style.display = 'block'
-        }
-        else
-        {
-            checkEmptyField(wachtwoord, 'Je wachtwoord moet langer dan 7 karakters zijn.')
-        }
+        errors.push('Je wachtwoorden komen niet overeen.')
     }
-    else
+}
+
+let validatePasswordLength = () => {
+    if (wachtwoord.value < 7 && herhaalWachtwoord.value < 7) 
     {
-        checkEmptyField(wachtwoord, 'Je wachtwoorden komen niet overeen.')
+        errors.push('Je wachtwoord moet langer dan 7 karakters zijn.')
     }
 }
 
@@ -54,15 +51,12 @@ let validateEmail = (emailadres) => {
     else {
 
     }
-    checkEmptyField(emailadres, 'E-mailaders is niet correct.')
+    errors.push('E-mailaders is niet correct.')
 }
 
-let validateAlgemeneVoorwaarden = (veld) => {
-    if (veld.value != null) {
-        successAlert.style.display = 'block'
-    }
-    else {
-        checkEmptyField(algemeneVoorwaarden, 'Je moet de algemene voorwaarden accepteren.')
+let validateAlgemeneVoorwaarden = () => {
+    if (algemeneVoorwaarden.checked == false) {
+        errors.push('Je moet de algemene voorwaarden accepteren.')
     }
 }
 
@@ -75,14 +69,14 @@ let validatePayment = (veld) => {
 let checkPC = (veld) => {
     if (veld.value != '') {
         if (veld.value >= 1000 && veld.value <10000) {
-            successAlert.style.display = 'block'
+            
         }
         else {
-            checkEmptyField(postcode, 'De waarde van postcode moet tussen 1000 en 9999 liggen.')
+            errors.push('De waarde van postcode moet tussen 1000 en 9999 liggen.')
         }
     }
     else {
-        checkEmptyField(postcode, 'Het veld postcode is vereist.')
+        errors.push('Het veld postcode is vereist.')
     }
 }
 
@@ -97,6 +91,9 @@ let showErrors = () => {
 
 //Controleren of het formulier is ingevuld, zo niet word de bijhorende melding getoond
 let validateForm = () => {
+    document.querySelector('#error').innerHTML = ''
+    errors = []
+    event.preventDefault()
     checkEmptyField(voornaam, 'Het veld voornaam is vereist.')
     checkEmptyField(familienaam, 'Het veld naam is vereist.')
     checkEmptyField(gebruikersnaam, 'Het veld gebruikersnaam is vereist.')
@@ -104,13 +101,40 @@ let validateForm = () => {
     checkEmptyField(wachtwoord, 'Het veld wachtwoord is vereist.')
     checkEmptyField(herhaalWachtwoord, 'Het veld herhaal wachtwoord is vereist.')
     validatePassword()
+    validatePasswordLength()
     checkEmptyField(adres, 'Adres is vereist.')
     checkEmptyField(provincie, 'Provincie is vereist.')
     checkPC(postcode)
-    validateAlgemeneVoorwaarden(algemeneVoorwaarden)
+    validateAlgemeneVoorwaarden()
 
     errorAlert.style.display = 'block'
     showErrors()
 }
 
-button.addEventListener('click', validateForm(), false)
+let paymentWay = () => {
+    switch (betalingsWijze) {
+        case document.querySelector('#bankingapp').checked == true:
+            betalingsWijze.innerHTML += 'Je betalingswijze is Banking app.'
+            break;
+        case document.querySelector('#overschrijving').checked == true:
+            betalingsWijze.innerHTML += 'Je betalingswijze is Overschrijving.'
+            break;
+        case document.querySelector('#visacard').checked == true:
+            betalingsWijze.innerHTML += 'Je betalingswijze is Visa card.'
+            break;
+        case document.querySelector('#paypal').checked == true:
+            betalingsWijze.innerHTML += 'Je betalingswijze is PayPal.'
+            break;
+    } 
+}
+
+let noErrors = () => {
+    if (errors == 0) {
+        errorAlert.style.display = 'none'
+        successAlert.style.display = 'block'
+        betalingsAlert.style.display = 'block'
+    }
+}
+
+button.addEventListener('click', validateForm, false)
+button.addEventListener('click', noErrors, false)
