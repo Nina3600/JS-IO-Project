@@ -29,6 +29,7 @@ let checkEmptyField = (veld, melding) => {
     }
 }
 
+//Controleren of allebei de wachtwoorden hetzelfde zijn
 let validatePassword = () => {
     if (wachtwoord.value != herhaalWachtwoord.value) 
     {
@@ -36,6 +37,7 @@ let validatePassword = () => {
     }
 }
 
+//Controleren of het wachtwoord langer dan 7 karakters is
 let validatePasswordLength = () => {
     if (wachtwoord.value.length < 7 && herhaalWachtwoord.value.length < 7) 
     {
@@ -54,6 +56,7 @@ let validateEmail = (emailadres) => {
     errors.push('E-mailaders is niet correct.')
 }
 
+//Controleren of de checkbox algemene voorwaarden aangevinkt is
 let validateAlgemeneVoorwaarden = () => {
     if (algemeneVoorwaarden.checked == false) {
         errors.push('Je moet de algemene voorwaarden accepteren.')
@@ -123,6 +126,7 @@ let validateForm = () => {
     showErrors()
 }
 
+//Als de array 'errors' geen waarde bevat tonen we de success alert en de betalingswijze
 let noErrors = () => {
     if (errors == 0) {
         errorAlert.style.display = 'none'
@@ -133,5 +137,6 @@ let noErrors = () => {
     }
 }
 
+//Events
 button.addEventListener('click', validateForm, false)
 button.addEventListener('click', noErrors, false)
