@@ -7,7 +7,7 @@ let betalingsAlert = document.querySelector('#payAlert')
 let voornaam = document.querySelector('#firstName')
 let familienaam = document.querySelector('#lastName')
 let gebruikersnaam = document.querySelector('#username')
-let emailadres = document.querySelector('#email')
+let eMailadres = document.querySelector('#email')
 let wachtwoord = document.querySelector('#Password')
 let herhaalWachtwoord = document.querySelector('#Herhaalwachtwoord')
 let adres = document.querySelector('#address')
@@ -47,13 +47,9 @@ let validatePasswordLength = () => {
 
 //Controleren of het veld 'E-mailadres' geldig is, zo niet een melding tonen
 let validateEmail = (emailadres) => {
-    if (condition) {
-        
+    if (!emailadres.value.includes('@')) {
+        errors.push('E-mailaders is niet correct.')
     }
-    else {
-
-    }
-    errors.push('E-mailaders is niet correct.')
 }
 
 //Controleren of de checkbox algemene voorwaarden aangevinkt is
@@ -63,7 +59,7 @@ let validateAlgemeneVoorwaarden = () => {
     }
 }
 
-//Controleren of er een betalingswijze is aangeduid, zo niet een melding tonen
+//Controleren welke betalingswijze geselecteerd is
 let validatePayment = () => {
     if (document.querySelector('#bankingapp').checked == true) {
         betalingsWijze.innerHTML += 'Je betalingswijze is Banking app.'
@@ -82,7 +78,7 @@ let validatePayment = () => {
 //Controleren of het veld 'Postcode' ingevuld is, zo niet een melding tonen
 let checkPC = (veld) => {
     if (veld.value != '') {
-        if (veld.value >= 1000 && veld.value <10000) {
+        if (veld.value >= 1000 && veld.value < 10000) {
             
         }
         else {
@@ -111,7 +107,8 @@ let validateForm = () => {
     checkEmptyField(voornaam, 'Het veld voornaam is vereist.')
     checkEmptyField(familienaam, 'Het veld naam is vereist.')
     checkEmptyField(gebruikersnaam, 'Het veld gebruikersnaam is vereist.')
-    checkEmptyField(emailadres, 'Het veld email is vereist.')
+    checkEmptyField(eMailadres, 'Het veld email is vereist.')
+    validateEmail(eMailadres)
     checkEmptyField(wachtwoord, 'Het veld wachtwoord is vereist.')
     checkEmptyField(herhaalWachtwoord, 'Het veld herhaal wachtwoord is vereist.')
     validatePassword()
@@ -126,7 +123,7 @@ let validateForm = () => {
     showErrors()
 }
 
-//Als de array 'errors' geen waarde bevat tonen we de success alert en de betalingswijze
+//Als de array 'errors' geen waarde bevat verbergen we de error alert en tonen we de success alert + de betalingswijze
 let noErrors = () => {
     if (errors == 0) {
         errorAlert.style.display = 'none'
