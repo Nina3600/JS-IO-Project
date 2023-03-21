@@ -47,8 +47,12 @@ let validatePasswordLength = () => {
 
 //Controleren of het veld 'E-mailadres' geldig is, zo niet een melding tonen
 let validateEmail = (emailadres) => {
-    if (!emailadres.value.includes('@')) {
-        errors.push('E-mailaders is niet correct.')
+    let emailRegEx = /([a-zA-Z0-9_]+)@([a-zA-Z0-9-.]+).([a-zA-Z]{2,5})/; //RegEx methode!
+    if (emailRegEx.test(emailadres)) {
+        return true;
+    } 
+    else {
+        return false;
     }
 }
 
