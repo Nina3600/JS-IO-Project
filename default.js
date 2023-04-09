@@ -49,10 +49,10 @@ let validatePasswordLength = () => {
 let validateEmail = (emailadres) => {
     let emailRegEx = /([a-zA-Z0-9_]+)@([a-zA-Z0-9-.]+).([a-zA-Z]{2,5})/; //RegEx methode!
     if (emailRegEx.test(emailadres)) {
-        
+        errors.push('E-mailaders is niet correct.')
     } 
     else {
-        errors.push('E-mailaders is niet correct.')
+        
     }
 }
 
